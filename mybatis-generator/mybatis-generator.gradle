@@ -1,0 +1,35 @@
+buildscript {
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath "gradle.plugin.com.thinkimi.gradle:mybatis-generator-plugin:${mybatisGeneratorPlugin}"
+  }
+}
+
+apply plugin: "java-library"
+apply plugin: "com.thinkimi.gradle.MybatisGenerator"
+
+repositories {
+  mavenCentral()
+}
+
+configurations {
+  mybatisGenerator
+}
+
+mybatisGenerator {
+  verbose = true
+  configFile = './mybatis-generator.xml'
+  dependencies {
+    // load customize plugin
+    mybatisGenerator fileTree(dir: "libs", include: "mybatis-generator.jar")
+    // update latest dependencies
+    // @see https://github.com/kimichen13/mybatis-generator-plugin/blob/v2.0/src/main/groovy/com/thinkimi/gradle/MybatisGeneratorPlugin.groovy#L22-L29
+    mybatisGenerator "org.mybatis.generator:mybatis-generator-core:${mybatisGeneratorCoreVersion}"
+    mybatisGenerator "mysql:mysql-connector-java:${mysqlConnectorJavaVersion}"
+    mybatisGenerator "tk.mybatis:mapper:${mybatisMapperVersion}"
+  }
+}

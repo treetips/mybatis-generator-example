@@ -1,0 +1,3 @@
+rootProject.name = 'mybatis-generator-plugin-example'
+include 'share'
+include 'mybatis-generator'

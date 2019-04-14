@@ -1,0 +1,14 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: "work"
+      MYSQL_USER: "worker"
+      MYSQL_PASSWORD: "worker"
+    volumes:
+      - ./mysql/conf.d/:/etc/mysql/conf.d
+      - ./mysql/initdb.d/:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
